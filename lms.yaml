@@ -1,0 +1,438 @@
+#Nishant
+openapi: 3.0.1
+info:
+ description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Swagger lms"
+
+paths:
+  /books:
+    get:
+      tags:
+        - "books"
+      summary: get all books
+     
+      responses:
+        200:
+          description: an array of books
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Book'
+    
+    post:
+      tags:
+        - "books"
+      summary: add books
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/BookBody'
+      responses:
+        201:
+          description: "Book created successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        400:
+          description: "Unsuccessful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "ISBN is required"
+          
+  /books/increase:
+    post:
+      tags:
+        - "books"
+      summary: increase stock if it is already available
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+               $ref: '#/components/schemas/BookBody'
+      responses:
+        200:
+          description: "Book is already available so increased the stock"
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/Book'
+      
+  /books/{id}:
+    post:
+      tags:
+        - "books"
+      summary: update books
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/Book'
+      responses:
+        200:
+          description: "Book updated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+    
+    get:
+      tags:
+        - "books"
+      summary: get particular book by id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+     
+      responses:
+        200:
+          description: " Book is found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+    delete:
+      tags:
+        - "books"
+      summary: delete book
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: "Book deleted successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Book'
+        
+    
+  /students:
+    get:
+      tags:
+        - "students"
+      summary: get all students
+     
+      responses:
+        200:
+          description: an array of students
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+    
+    post:
+      tags:
+        - "students"
+      summary: add student
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/StudentBody'
+      responses:
+        201:
+          description: "Student created successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        400:
+          description: "Unsuccessful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "name is required" 
+        
+  /students/{id}:
+    get:
+      tags:
+        - "students"
+      summary: get particular student by id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        201:
+          description: "Student found successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        400:
+          description: "error message"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "err getting student" 
+      
+      
+    post:
+      tags:
+        - "students"
+      summary: update particular student by id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/StudentBody'
+      responses:
+        200:
+          description: "Student updated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        400:
+          description: "error message"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "err getting student"   
+  
+ 
+  /loans:
+    get:
+      tags:
+        - "loans"
+      summary: get all loans
+     
+      responses:
+        200:
+          description: an array of loans
+          content:
+            application/json:
+              schema: 
+                type: array
+                items:
+                  $ref: '#/components/schemas/Loan'
+    
+    post:
+      tags:
+        - "loans"
+      summary: add a loan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/LoanBody'
+      responses:
+        201:
+          description: "loan added successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+        400:
+          description: "Unsuccessful"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "name is required" 
+   
+  
+  /loans/{id}:
+    get:
+      tags:
+        - "loans"
+      summary: get particular loan by id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: "Loan found successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+        400:
+          description: "error message"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "err getting loan" 
+      
+      
+    post:
+      tags:
+        - "loans"
+      summary: update particular loan by id
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: 
+              $ref: '#/components/schemas/LoanBody'
+      responses:
+        200:
+          description: "Loan  updated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+        400:
+          description: "error message"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "err getting loan"   
+      
+    delete:
+      tags:
+        - "loans"
+      summary: delete loan
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: "loan deleted successfully"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Loan'
+                
+components:
+  schemas:
+    BookBody:
+      properties:
+        title:
+          type: string
+          example: sea tides
+        author:
+          type: string
+          example: alexandar
+        isbn:
+          type: string
+          example: 1232
+        stock:
+         type: number
+         example: 7
+
+
+    StudentBody:
+      properties:
+       name:
+        type: string
+        example: raj
+
+
+    LoanBody:
+      properties:
+       bookId:
+        type: string
+        example: hhj89898jj
+       studentId:
+        type: string
+        example: hhud768787ff
+       outDate: 
+        type: string
+        example: 2022-08-09
+       returnDate:
+        type: string  
+        example: 2022-05-12
+
+
+
+
+    Book:
+      allOf: 
+        - $ref: "#/components/schemas/BookBody"
+        - type: object
+          properties:
+            id:
+              type: string
+              example: 24524624gr44w4
+     
+    Student:
+      allOf:
+       - $ref: "#/components/schemas/StudentBody"
+       - type: object
+         properties:
+           id:
+             type: string
+             example: 232324jk44444
+        
+    Loan:
+      allOf:
+      - $ref: "#/components/schemas/LoanBody"
+      - type: object
+        properties:
+          id:
+            type: string
+            example: 285jjhkkjkjkj      
